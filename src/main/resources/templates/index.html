@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" media="all" />
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+            <h2>Admin control panel</h2>
+            <br/>
+        </div>
+        <div class="row ">
+            <div class="col-md-4 adminOptionContainer">
+                <a class="btn btn-primary adminOptionButton" th:href="@{/dog}">Manage dogs</a>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-4 adminOptionContainer">
+                <a class="btn btn-primary adminOptionButton">Manage admin accounts</a>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-4 adminOptionContainer">
+                <a class="btn btn-primary btn-xs adminLogoutButton" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

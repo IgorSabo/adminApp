@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" th:with="currentPage='result'" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:sd="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"></meta>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../resources/static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" media="screen"/>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div th:if="${KTP_MSG_E != null and not #lists.isEmpty('KTP_MSG_E')}" class="alert alert-danger k-alert" role="alert">
+        <ul th:each="ktp_err : ${KTP_MSG_E}">
+            <li th:text="#{${ktp_err}}"></li>
+        </ul>
+    </div>
+    <div th:if="${KTP_MSG_W != null and not #lists.isEmpty('KTP_MSG_W')}" class="alert alert-warning k-alert" role="alert">
+        <ul th:each="ktp_warn : ${KTP_MSG_W}">
+            <li th:text="#{${ktp_warn}}"></li>
+        </ul>
+    </div>
+    <div th:if="${KTP_MSG_I != null and not #lists.isEmpty('KTP_MSG_I')}" class="alert alert-info k-alert" role="alert">
+        <ul th:each="ktp_info : ${KTP_MSG_I}">
+            <li th:text="#{${ktp_info}}"></li>
+        </ul>
+    </div>
+
+    <br/>
+    <br/>
+    <div th:if="${dog != null}" class="dogContainer">
+
+        <div class="form-horizontal" method="post" th:action="@{/dog/save}">
+            <hr/>
+            Main info
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <label th:for="name" class="col-sm-3 control-label" th:text="#{list.edit.dogs.dog.name}"></label>
+                    <div class="col-sm-8">
+                        <input type="text" th:value="${dog.name}" th:name="name" th:id="name"
+                               placeholder="#{list.edit.dogs.dog.name}" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <label th:for="gender" class="col-sm-3 control-label"
+                           th:text="#{list.edit.dogs.dog.gender}"></label>
+                    <div class="col-sm-8">
+                        <select type="text" th:name="gender" th:id="gender" class="form-control">
+                            <option th:selected="${dog.gender == 'Male'}">Male</option>
+                            <option th:selected="${dog.gender == 'Female'}">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <label th:for="age" class="col-sm-3 control-label" th:text="#{list.edit.dogs.dog.age}"></label>
+                    <div class="col-sm-8">
+                        <input type="text" th:value="${dog.age}" th:name="age" th:id="age"
+                               placeholder="#{list.edit.dogs.dog.age}" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <label th:for="age" class="col-sm-3 control-label" th:text="#{list.edit.dogs.description}"></label>
+                    <div class="col-sm-8">
+                        <textarea cols="50" rows="5" class="form-control"
+                                  th:text="${dog.description!=null ? dog.description : 'Description...'}"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <label th:for="age" class="col-sm-3 control-label" th:text="#{list.edit.dogs.main.image}"></label>
+                    <div class="col-sm-8">
+                        <img class="imageLink"
+                             th:src="@{'/dog/'+${dog.id}+'/getMainImage'}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-6">
+            Images
+        </div>
+        <div class="col-sm-6">
+            <input type="file" class="uploadFile" style="visibility: hidden" />
+            <button class="uploadButton btn btn-primary pull-right" onclick="uploadImageHandler()">Upload image</button>
+        </div>
+    </div>
+
+
+    <br/>
+    <br/>
+    <div th:replace="../fragments/images :: images(${dog})"></div>
+
+
+</div>
+<th:block layout:fragment="page-js">
+    <script src="../resources/static/js/functions.js" th:src="@{/js/functions.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        initDogParams([[${dog.id}]]);
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>

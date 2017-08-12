@@ -1,0 +1,52 @@
+.adminOptionContainer
+{
+    width: 300px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-left: 0px;
+}
+
+.adminLogoutButton
+{
+    width:30%;
+}
+
+.adminOptionButton
+{
+    width: 100%;
+}
+
+.imageLink
+{
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+    margin-left: 10px;
+    /*width:230px;*/
+    height: 135px;
+    /*padding-top: 3px;*/
+}
+
+.td-align-middle
+{
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 18pt;
+}
+
+.glyphiconRemoveDog
+{
+    cursor: pointer;
+    text-decoration: none;
+    font-size: xx-large !important;
+    color: red !important;
+}
+.optionsContainer
+{
+    margin-top: 50px;
+}
+
+.nameOption, .genderOption, .ageOption, .puppyOption
+{
+    margin:10px;
+}

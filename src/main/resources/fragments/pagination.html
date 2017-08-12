@@ -1,0 +1,26 @@
+<!--/* pagers */-->
+<div th:fragment="full-pager-with-info(pageData)">
+  <nav th:replace="../fragments/pagination :: pager--full(${pageData})" th:if="${pageData.numberOfElements &gt; 0}"></nav>
+  <span th:replace="../fragments/pagination :: paginate-info--compact(${pageData})"></span>
+</div>
+
+
+<div th:fragment="pager--compact(pageData)" th:with="_sd_.page.object=${pageData}" sd:pagination="compact-pager" class="btn-group pager-compact"></div>
+
+<nav th:fragment="pager--full(pageData)">
+  <ul th:with="_sd_.page.object=${pageData}" th:if="${pageData.numberOfElements &gt; 0}" sd:pagination="full" class="pagination"></ul>
+</nav>
+
+<ul th:fragment="pager--simple(pageData)" th:with="_sd_.page.object=${pageData}" sd:pagination="pager" class="pagination"></ul>
+
+<ul th:fragment="pager--aligned-links(pageData)" th:with="_sd_.page.object=${pageData}" sd:pagination="aligned-links" class="pagination"></ul>
+
+
+<!--/* pagination info */-->
+<span th:fragment="paginate-info--full(pageData)" th:with="_sd_.page.object=${pageData}" sd:pagination-summary="full"></span>
+
+<span th:fragment="paginate-info--compact(pageData)" th:with="_sd_.page.object=${pageData}" sd:pagination-summary="compact"></span>
+
+
+<!--/* page size selector */-->
+<div th:fragment="page-size--dropdown" sd:page-size-selector="dropdown" class="btn-group dropdown"></div>

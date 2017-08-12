@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" th:with="currentPage='result'" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:sd="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"></meta>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" media="screen"/>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4 ">
+            <br/>
+            <h2>Manage dogs</h2>
+            <br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row optionsContainer">
+                <form method="get" th:action="@{/dogs}">
+                    <div class="row nameOption">
+                        <label th:for="dogNameSearchParam" class="col-sm-2 control-label"
+                               th:text="#{list.edit.dogs.dog.name}"></label>
+                        <div class="col-sm-8">
+                            <input type="text" th:value="${results.name != null ? results.name : null}"
+                                   th:name="#{list.edit.dogs.dog.name}" th:id="dogNameSearchParam"
+                                   th:placeholder="#{list.edit.dogs.dog.name}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row genderOption">
+                        <label th:for="dogGenderSearchParam" class="col-sm-2 control-label"
+                               th:text="#{list.edit.dogs.dog.gender}"></label>
+                        <div class="col-sm-8">
+                            <select type="text" th:name="#{list.edit.dogs.dog.gender}" th:id="dogGenderSearchParam"
+                                    class="form-control">
+                                <option th:selected="${results.gender == 'All'}">All</option>
+                                <option th:selected="${results.gender == 'Male'}">Male</option>
+                                <option th:selected="${results.gender == 'Female'}">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row ageOption">
+                        <label th:for="dogAgeSearchParam" class="col-sm-2 control-label"
+                               th:text="#{list.edit.dogs.dog.age}"></label>
+                        <div class="col-sm-8">
+                            <input type="text" th:text="${results.age != null ? results.age : null}"
+                                   th:name="#{list.edit.dogs.dog.age}" th:id="dogAgeSearchParam"
+                                   th:placeholder="#{list.edit.dogs.dog.age}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row puppyOption">
+                        <label th:for="dogIsPuppySearchParam" class="col-sm-2 control-label"
+                               th:text="#{list.edit.dogs.is.puppy}"></label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" th:checked="${results.isPuppy}" th:name="#{list.edit.dogs.is.puppy}"
+                                   th:id="dogIsPuppySearchParam"
+                                   th:placeholder="#{list.edit.dogs.is.puppy}"/>
+                        </div>
+                    </div>
+                    <div class="row puppyOption">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <button type="submit" class="btn btn-primary adminOptionButton">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row" th:if="${results.list != null}">
+                <table th:if="${results.list.numberOfElements &gt; 0}" class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th class="dogName td-align-middle"><a th:text="#{list.edit.dogs.dog.name}" class="sorted"
+                                                               sd:pagination-sort="name">Name</a></th>
+                        <th class="dogGender td-align-middle"><a th:text="#{list.edit.dogs.dog.gender}" class="sorted"
+                                                                 sd:pagination-sort="gender">Gender</a></th>
+                        <th class="dogAge td-align-middle"><a th:text="#{list.edit.dogs.dog.age}" class="sorted"
+                                                              sd:pagination-sort="age">Age</a></th>
+                        <th class="dogImg td-align-middle" th:text="#{list.edit.dogs.dog.img}">Picture</th>
+                        <th class="dogEdit td-align-middle" th:text="#{list.edit.dogs.dog.edit}">Edit</th>
+                        <th class="dogDelete td-align-middle" th:text="#{list.edit.dogs.dog.delete}">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="result : ${results.list}">
+                        <td th:text="${result.name}" th:class="td-align-middle">Dog name</td>
+                        <td th:text="${result.gender}" th:class="td-align-middle">Dog gender</td>
+                        <td th:text="${result.age}" th:class="td-align-middle">Dog age</td>
+                        <td th:class="td-align-middle"><img class="imageLink"
+                                                            th:src="@{'/dog/'+${result.id}+'/getMainImage'}"/></td>
+                        <td th:class="td-align-middle"><a class="btn btn-warning btn-s "
+                                                          th:text="#{list.edit.dogs.dog.edit}"
+                                                          th:href="@{/dog/{id}/edit(id=${result.id})}">Edit</a></td>
+                        <td th:class="td-align-middle"><a class="glyphicon glyphicon-remove glyphiconRemoveDog"
+                                                          th:href="@{/delete/{id}(id=${result.id})}"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <div th:replace="../fragments/pagination :: full-pager-with-info(${results.list})"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

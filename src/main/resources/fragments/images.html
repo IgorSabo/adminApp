@@ -1,0 +1,29 @@
+<div  th:fragment="images(dog)" class="col-sm-10 col-sm-offset-1 resultsContainer">
+
+
+    <div th:each="img:${dog.images}" class="imageContainer col-sm-6">
+
+
+        <div class="row">
+            <div class="col-sm-8">
+                <img class="imageLink" th:src="@{'/dog/'+${dog.id}+'/getStandardImage/'+${img.id}}"/>
+            </div>
+            <div class="col-sm-4">
+                <div class="row imageContainerOption">
+                    <button class="btn btn-danger btn-s" th:text="#{edit.dog.image.delete}" th:onclick="'deleteImageHandler('+${img.id}+')'">Delete image</button>
+                </div>
+                <div class="row imageContainerOption">
+                    <a class="btn btn-warning btn-s" th:text="#{edit.dog.set.as.main.image}">Set as main</a>
+                </div>
+                <div class="row imageContainerOption">
+                    <label th:for="currentMainImage" class="col-sm-6 imageVisibleLabel"
+                           th:text="#{edit.dog.image.visible}"></label>
+                    <div class="col-sm-2">
+                        <input type="checkbox" th:class="visibilityCheckbox" th:name="currentMainImage" th:id="${'currentImageVisible'+img.id}" th:checked="${img.visible}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
